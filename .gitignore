@@ -31,7 +31,7 @@ Thumbs.db
 *.userprefs
 *.pidb
 *.booproj
-/.vs/
+.vs/
 
 # Unity3D generated meta files
 *.pidb.meta
