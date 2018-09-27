@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class LevelCamera : MonoBehaviour 
 {
@@ -75,7 +76,7 @@ public class LevelCamera : MonoBehaviour
 		// Make the level restart if the user presses escape...
 		if (Input.GetKeyDown (KeyCode.Escape)) 
 		{
-    		Application.LoadLevel (0);
+    		SceneManager.LoadScene (0);
   		} 
 	}
 

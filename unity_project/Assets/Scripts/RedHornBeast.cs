@@ -39,9 +39,9 @@ public class RedHornBeast : MonoBehaviour
 	// The Constructor function in Unity...
 	protected void Awake () 
 	{
-		lightTransform = gameObject.transform.FindChild("Light").transform;
-		spikeLeft = transform.FindChild("SpikeLeft").gameObject;
-		spikeRight = transform.FindChild("SpikeRight").gameObject;
+		lightTransform = gameObject.transform.Find("Light").transform;
+		spikeLeft = transform.Find("SpikeLeft").gameObject;
+		spikeRight = transform.Find("SpikeRight").gameObject;
 	}
 	
 	// Use this for initialization
@@ -204,7 +204,7 @@ public class RedHornBeast : MonoBehaviour
 	protected void KillRobotChildren()
 	{
 		// Reset all the enemy bots...
-		Transform robot = transform.FindChild("Prb_SmallFlyingRobot(Clone)");
+		Transform robot = transform.Find("Prb_SmallFlyingRobot(Clone)");
 		if ( robot != null)
 		{
 			Destroy(robot.gameObject);

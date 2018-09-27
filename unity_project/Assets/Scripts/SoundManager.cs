@@ -1,73 +1,115 @@
 using UnityEngine;
 using System.Collections;
 
-public class SoundManager : MonoBehaviour 
+public class SoundManager : MonoBehaviour
 {
-	#region Variables
+    #region Variables
 
-	// Protected Instance Variables
-	protected string path = "Sounds/";
-	protected AudioSource stageMusic;
-	protected AudioSource stageEndMusic;
-	protected AudioSource megamanLeavesStageSound;
-	protected AudioSource deathSound;
-	protected AudioSource hurtingSound;
-	protected AudioSource landingSound;
-	protected AudioSource shootingSound;
-	protected AudioSource bossMusic;
-	protected AudioSource bossDoorSound;
-	protected AudioSource bossHurtingSound;
-	protected AudioSource healthBarFillSound;
+    // Protected Instance Variables
+    protected string path = "Sounds/";
+    protected AudioSource stageMusic;
+    protected AudioSource stageEndMusic;
+    protected AudioSource megamanLeavesStageSound;
+    protected AudioSource deathSound;
+    protected AudioSource hurtingSound;
+    protected AudioSource landingSound;
+    protected AudioSource shootingSound;
+    protected AudioSource bossMusic;
+    protected AudioSource bossDoorSound;
+    protected AudioSource bossHurtingSound;
+    protected AudioSource healthBarFillSound;
 
-	#endregion
+    #endregion
 
 
-	#region MonoBehaviour
+    #region MonoBehaviour
 
-	// Constructor
-	protected void Awake() 
-	{
-		GameEngine.SoundManager = this;
-	}
+    // Constructor
+    protected void Awake()
+    {
+        GameEngine.SoundManager = this;
+    }
 
-	// Use this for initialization
-	protected void Start()
-	{
-		AudioClip stageMusicClip = (AudioClip) Resources.Load( path + "StageMusic" );
-		stageMusic = AddAudio(stageMusicClip, true, true, 0.50f);
-		
-		AudioClip stageEndMusicClip = (AudioClip) Resources.Load( path + "StageEndMusic" );
-		stageEndMusic = AddAudio(stageEndMusicClip, false, false, 1.0f);
-		
-		AudioClip deathSoundClip = (AudioClip) Resources.Load( path + "DeathSound" );
-		deathSound = AddAudio(deathSoundClip, false, false, 0.25f);
-		
-		AudioClip healthBarFillSoundClip = (AudioClip) Resources.Load( path + "HealthBarFillSound" );
-		healthBarFillSound = AddAudio(healthBarFillSoundClip, true, false, 1.0f);
-		
-		AudioClip hurtingSoundClip = (AudioClip) Resources.Load( path + "HurtingSound" );
-		hurtingSound = AddAudio(hurtingSoundClip, false, false, 1.0f);
-		
-		AudioClip landingSoundClip = (AudioClip) Resources.Load( path + "LandingSound" );
-		landingSound = AddAudio(landingSoundClip, false, false, 1.0f);
-		
-		AudioClip shootingSoundClip = (AudioClip) Resources.Load( path + "ShootingSound" );
-		shootingSound = AddAudio(shootingSoundClip, false, false, 1.0f);		
-		
-		AudioClip bossMusicClip = (AudioClip) Resources.Load( path + "BossMusic" );
-		bossMusic = AddAudio(bossMusicClip, true, true, 0.90f);
-		
-		AudioClip bossDoorSoundClip = (AudioClip) Resources.Load( path + "BossDoorSound" );
-		bossDoorSound = AddAudio(bossDoorSoundClip, false, false, 0.75f);
-		
-		AudioClip bossHurtingSoundClip = (AudioClip) Resources.Load( path + "BossHurtingSound" );
-		bossHurtingSound = AddAudio(bossHurtingSoundClip, false, false, 0.95f);
-		
-		AudioClip megamanLeavesClip = (AudioClip) Resources.Load( path + "MegamanLeaveStageSound" );
-		megamanLeavesStageSound = AddAudio(megamanLeavesClip, false, false, 0.99f);
-		
-		Play(AirmanLevelSounds.STAGE);
-	}
+    // Use this for initialization
+    protected void Start()
+    {
+        //AirmanLevelProfile();
+        DarudeModifierProfile();
+
+        Play(AirmanLevelSounds.STAGE);
+    }
+
+    protected void AirmanLevelProfile()
+    {
+        AudioClip stageMusicClip = (AudioClip)Resources.Load(path + "StageMusic");
+        stageMusic = AddAudio(stageMusicClip, true, true, 0.50f);
+
+        AudioClip stageEndMusicClip = (AudioClip)Resources.Load(path + "StageEndMusic");
+        stageEndMusic = AddAudio(stageEndMusicClip, false, false, 1.0f);
+
+        AudioClip deathSoundClip = (AudioClip)Resources.Load(path + "DeathSound");
+        deathSound = AddAudio(deathSoundClip, false, false, 0.25f);
+
+        AudioClip healthBarFillSoundClip = (AudioClip)Resources.Load(path + "HealthBarFillSound");
+        healthBarFillSound = AddAudio(healthBarFillSoundClip, true, false, 1.0f);
+
+        AudioClip hurtingSoundClip = (AudioClip)Resources.Load(path + "HurtingSound");
+        hurtingSound = AddAudio(hurtingSoundClip, false, false, 1.0f);
+
+        AudioClip landingSoundClip = (AudioClip)Resources.Load(path + "LandingSound");
+        landingSound = AddAudio(landingSoundClip, false, false, 1.0f);
+
+        AudioClip shootingSoundClip = (AudioClip)Resources.Load(path + "ShootingSound");
+        shootingSound = AddAudio(shootingSoundClip, false, false, 1.0f);
+
+        AudioClip bossMusicClip = (AudioClip)Resources.Load(path + "BossMusic");
+        bossMusic = AddAudio(bossMusicClip, true, true, 0.90f);
+
+        AudioClip bossDoorSoundClip = (AudioClip)Resources.Load(path + "BossDoorSound");
+        bossDoorSound = AddAudio(bossDoorSoundClip, false, false, 0.75f);
+
+        AudioClip bossHurtingSoundClip = (AudioClip)Resources.Load(path + "BossHurtingSound");
+        bossHurtingSound = AddAudio(bossHurtingSoundClip, false, false, 0.95f);
+
+        AudioClip megamanLeavesClip = (AudioClip)Resources.Load(path + "MegamanLeaveStageSound");
+        megamanLeavesStageSound = AddAudio(megamanLeavesClip, false, false, 0.99f);
+}
+
+    protected void DarudeModifierProfile()
+    {
+        AudioClip stageMusicClip = (AudioClip)Resources.Load(path + "Darude");
+        stageMusic = AddAudio(stageMusicClip, true, true, 0.50f);
+
+        AudioClip stageEndMusicClip = (AudioClip)Resources.Load(path + "StageEndMusic");
+        stageEndMusic = AddAudio(stageEndMusicClip, false, false, 1.0f);
+
+        AudioClip deathSoundClip = (AudioClip)Resources.Load(path + "DeathSound");
+        deathSound = AddAudio(deathSoundClip, false, false, 0.25f);
+
+        AudioClip healthBarFillSoundClip = (AudioClip)Resources.Load(path + "HealthBarFillSound");
+        healthBarFillSound = AddAudio(healthBarFillSoundClip, true, false, 1.0f);
+
+        AudioClip hurtingSoundClip = (AudioClip)Resources.Load(path + "HurtingSound");
+        hurtingSound = AddAudio(hurtingSoundClip, false, false, 1.0f);
+
+        AudioClip landingSoundClip = (AudioClip)Resources.Load(path + "LandingSound");
+        landingSound = AddAudio(landingSoundClip, false, false, 1.0f);
+
+        AudioClip shootingSoundClip = (AudioClip)Resources.Load(path + "ShootingSound");
+        shootingSound = AddAudio(shootingSoundClip, false, false, 1.0f);
+
+        AudioClip bossMusicClip = (AudioClip)Resources.Load(path + "BossMusic");
+        bossMusic = AddAudio(bossMusicClip, true, true, 0.90f);
+
+        AudioClip bossDoorSoundClip = (AudioClip)Resources.Load(path + "BossDoorSound");
+        bossDoorSound = AddAudio(bossDoorSoundClip, false, false, 0.75f);
+
+        AudioClip bossHurtingSoundClip = (AudioClip)Resources.Load(path + "BossHurtingSound");
+        bossHurtingSound = AddAudio(bossHurtingSoundClip, false, false, 0.95f);
+
+        AudioClip megamanLeavesClip = (AudioClip)Resources.Load(path + "MegamanLeaveStageSound");
+        megamanLeavesStageSound = AddAudio(megamanLeavesClip, false, false, 0.99f);
+    }
 
 	// Called when the behaviour becomes disabled or inactive
 	protected void OnDisable()
