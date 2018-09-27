@@ -7,26 +7,40 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-	#region Variables
+    #region Variables
 
-	// Unity Editor Variables
-	[SerializeField] protected Rigidbody deathParticlePrefab;
-	[SerializeField] protected Renderer playerTexRend;
-	[SerializeField] protected Transform playerTexObj;
-	[SerializeField] protected List<Material> playerMaterials;
-	
-	// Public Properties
-	public bool IsPlayerInactive 		{ get; set; }
-	public bool IsFrozen 				{ get { return movement.IsFrozen; } 				set { movement.IsFrozen = value; }				}
-	public bool IsExternalForceActive 	{ get { return movement.IsExternalForceActive; }	set { movement.IsExternalForceActive = value; } 	}
-	public bool IsDead 					{ get { return health.IsDead; } 					set { health.IsDead = value; }					}
-	public bool CanShoot 				{ get { return shooting.CanShoot; } 				set { shooting.CanShoot = value; }				}
-	public float CurrentHealth 			{ get { return health.CurrentHealth; } 			set { health.CurrentHealth = value; } 			}
-	public Vector3 ExternalForce 		{ get { return movement.ExternalForce; } 			set { movement.ExternalForce = value; } 			}
-	public Vector3 CheckpointPosition 	{ get { return movement.CheckPointPosition; } 	set { movement.CheckPointPosition = value; } 		}
+    // Unity Editor Variables
+    [SerializeField] protected Rigidbody deathParticlePrefab;
+    [SerializeField] protected Renderer playerTexRend;
+    [SerializeField] protected Transform playerTexObj;
+    [SerializeField] protected List<Material> playerMaterials;
+
+    // Public Properties
+    public bool IsPlayerInactive { get; set; }
+    public bool IsFrozen { get { return movement.IsFrozen; } set { movement.IsFrozen = value; } }
+    public bool IsExternalForceActive { get { return movement.IsExternalForceActive; } set { movement.IsExternalForceActive = value; } }
+    public bool IsDead { get { return health.IsDead; } set { health.IsDead = value; } }
+    public bool CanShoot { get { return shooting.CanShoot; } set { shooting.CanShoot = value; } }
+    public float CurrentHealth { get { return health.CurrentHealth; } set { health.CurrentHealth = value; } }
+    public Vector3 ExternalForce { get { return movement.ExternalForce; } set { movement.ExternalForce = value; } }
+    public Vector3 CheckpointPosition { get { return movement.CheckPointPosition; } set { movement.CheckPointPosition = value; } }
+
+    protected int CurrentSong
+    {
+        get
+        {
+            return currentSong;
+        }
+
+        set
+        {
+            currentSong = value;
+        }
+    }
+
 
     // Protected Instance Variables
-    private int currentSong = 2;
+    private int currentSong = 1;
     private int possibleSongTypes = 2;
     protected int walkingTexIndex = 0;
 	protected int standingTexIndex = 0;
@@ -56,7 +70,10 @@ public class Player : MonoBehaviour
 		Assert.IsNotNull(playerTexObj);
 		Assert.IsTrue(playerMaterials.Count == 17 * possibleSongTypes);
 
-		levelCamera = FindObjectOfType<LevelCamera>();
+        EventManager.StartListening("Normal", FlipCurrentSongToNormal);
+        EventManager.StartListening("Darude", FlipCurrentSongToDarude);
+
+        levelCamera = FindObjectOfType<LevelCamera>();
 		Assert.IsNotNull(levelCamera);
 
 		movement = gameObject.GetComponent<Movement>();
@@ -123,13 +140,23 @@ public class Player : MonoBehaviour
 		GameEngine.Player = null;
 	}
 
-	#endregion
+    protected void FlipCurrentSongToNormal()
+    {
+        this.currentSong = 1;
+    }
+
+    protected void FlipCurrentSongToDarude()
+    {
+        this.currentSong = 2;
+    }
+
+    #endregion
 
 
-	#region Protected Functions
-	
-	// 
-	protected void Reset() 
+    #region Protected Functions
+
+    // 
+    protected void Reset() 
 	{
 		health.Reset();
 		movement.Reset();
@@ -199,14 +226,14 @@ public class Player : MonoBehaviour
 	// 
 	protected IEnumerator MakeThePlayerLeaveStageRoutine()
 	{
-		playerTexRend.material = playerMaterials[14 + (17 * (currentSong - 1))];
+		playerTexRend.material = playerMaterials[14 + (17 * (CurrentSong - 1))];
 		yield return new WaitForSeconds(0.05f);
 		
-		playerTexRend.material = playerMaterials[15 + (17 * (currentSong - 1))];
+		playerTexRend.material = playerMaterials[15 + (17 * (CurrentSong - 1))];
 		yield return new WaitForSeconds(0.05f);
 		
 		GameEngine.SoundManager.Play(AirmanLevelSounds.LEAVE_LEVEL);
-		playerTexRend.material = playerMaterials[16 + (17 * (currentSong - 1))];
+		playerTexRend.material = playerMaterials[16 + (17 * (CurrentSong - 1))];
 		playerTexObj.localScale = new Vector3(0.04f, 1.0f, 0.2f);
 
 		StartCoroutine(MovePlayerUp());
@@ -289,7 +316,7 @@ public class Player : MonoBehaviour
 		if (health.IsHurting == true && health.IsDead == false)
 		{
 			playerTexObj.transform.localScale = new Vector3(0.1175f, 1.0f, 0.1175f);
-			playerTexRend.material = playerMaterials[7 + (17 * (currentSong - 1))];
+			playerTexRend.material = playerMaterials[7 + (17 * (CurrentSong - 1))];
 			playerTexRend.material.color *= 0.75f + Random.value;
 		}
 		else if (movement.IsJumping == true)
@@ -297,12 +324,12 @@ public class Player : MonoBehaviour
 			if (shooting.IsShooting == true)
 			{
 				playerTexObj.transform.localScale = new Vector3(0.1175f, 1.0f, 0.1175f);
-				playerTexRend.material = playerMaterials[9 + (17 * (currentSong - 1))];
+				playerTexRend.material = playerMaterials[9 + (17 * (CurrentSong - 1))];
 			}
 			else
 			{
 				playerTexObj.transform.localScale = new Vector3(0.1175f, 1.0f, 0.1175f);
-				playerTexRend.material = playerMaterials[2 + (17 * (currentSong - 1))];
+				playerTexRend.material = playerMaterials[2 + (17 * (CurrentSong - 1))];
 			}
 		}
 		else if (movement.IsWalking == true)
@@ -312,12 +339,12 @@ public class Player : MonoBehaviour
 			if (shooting.IsShooting == true)
 			{
 				playerTexObj.transform.localScale = new Vector3(0.13f, 1.0f, 0.1f);
-				playerTexRend.material = playerMaterials[ ((walkingTexIndex % 4) + 10) + (17 * (currentSong - 1))];
+				playerTexRend.material = playerMaterials[ ((walkingTexIndex % 4) + 10) + (17 * (CurrentSong - 1))];
 			}
 			else
 			{
 				playerTexObj.transform.localScale = new Vector3(0.1f, 1.0f, 0.1f);
-				playerTexRend.material = playerMaterials[ ((walkingTexIndex % 4) + 3) + (17 * (currentSong - 1))];
+				playerTexRend.material = playerMaterials[ ((walkingTexIndex % 4) + 3) + (17 * (CurrentSong - 1))];
 			}
 		}
 		// Standing...
@@ -326,13 +353,13 @@ public class Player : MonoBehaviour
 			if (shooting.IsShooting == true)
 			{
 				playerTexObj.transform.localScale = new Vector3(0.128f, 1.0f, 0.1f);
-				playerTexRend.material = playerMaterials[8 + (17 * (currentSong - 1))];
+				playerTexRend.material = playerMaterials[8 + (17 * (CurrentSong - 1))];
 			}
 			else
 			{
 				playerTexObj.transform.localScale = new Vector3(0.1f, 1.0f, 0.1f);
 				standingTexIndex = (int) (Time.time / standingTexInterval);
-				playerTexRend.material = (standingTexIndex % 10 == 0) ? playerMaterials[1 + (17 * (currentSong - 1))] : playerMaterials[17 * (currentSong - 1)];
+				playerTexRend.material = (standingTexIndex % 10 == 0) ? playerMaterials[1 + (17 * (CurrentSong - 1))] : playerMaterials[17 * (CurrentSong - 1)];
 			}
 		}
 		

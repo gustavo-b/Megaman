@@ -7,19 +7,24 @@ public class EventTriggerTest : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown("0"))
+        {
+            EventManager.TriggerEvent("Normal");
+        }
+
         if (Input.GetKeyDown("1"))
         {
-            EventManager.TriggerEvent("test");
+            EventManager.TriggerEvent("Darude");
         }
 
         if (Input.GetKeyDown("2"))
         {
-            EventManager.TriggerEvent("Spawn");
+            EventManager.TriggerEvent("Slow");
         }
 
         if (Input.GetKeyDown("3"))
         {
-            EventManager.TriggerEvent("Destroy");
+            EventManager.TriggerEvent("Rock");
         }
 
         if (Input.GetKeyDown("4"))
