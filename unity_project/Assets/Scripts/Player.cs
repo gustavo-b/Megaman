@@ -25,23 +25,7 @@ public class Player : MonoBehaviour
     public Vector3 ExternalForce { get { return movement.ExternalForce; } set { movement.ExternalForce = value; } }
     public Vector3 CheckpointPosition { get { return movement.CheckPointPosition; } set { movement.CheckPointPosition = value; } }
 
-    protected int CurrentSong
-    {
-        get
-        {
-            return currentSong;
-        }
-
-        set
-        {
-            currentSong = value;
-        }
-    }
-
-
     // Protected Instance Variables
-    private int currentSong = 1;
-    private int possibleSongTypes = 2;
     protected int walkingTexIndex = 0;
 	protected int standingTexIndex = 0;
 	protected float walkingTexInterval = 0.2f;
@@ -68,10 +52,7 @@ public class Player : MonoBehaviour
 		Assert.IsNotNull(deathParticlePrefab);
 		Assert.IsNotNull(playerTexRend);
 		Assert.IsNotNull(playerTexObj);
-		Assert.IsTrue(playerMaterials.Count == 17 * possibleSongTypes);
-
-        EventManager.StartListening("Normal", FlipCurrentSongToNormal);
-        EventManager.StartListening("Darude", FlipCurrentSongToDarude);
+		Assert.IsTrue(playerMaterials.Count == 17 * Listener.possibleSongTypes);
 
         levelCamera = FindObjectOfType<LevelCamera>();
 		Assert.IsNotNull(levelCamera);
@@ -139,16 +120,6 @@ public class Player : MonoBehaviour
 	{
 		GameEngine.Player = null;
 	}
-
-    protected void FlipCurrentSongToNormal()
-    {
-        this.currentSong = 1;
-    }
-
-    protected void FlipCurrentSongToDarude()
-    {
-        this.currentSong = 2;
-    }
 
     #endregion
 
@@ -226,14 +197,14 @@ public class Player : MonoBehaviour
 	// 
 	protected IEnumerator MakeThePlayerLeaveStageRoutine()
 	{
-		playerTexRend.material = playerMaterials[14 + (17 * (CurrentSong - 1))];
+		playerTexRend.material = playerMaterials[14 + (17 * Listener.currentSong)];
 		yield return new WaitForSeconds(0.05f);
 		
-		playerTexRend.material = playerMaterials[15 + (17 * (CurrentSong - 1))];
+		playerTexRend.material = playerMaterials[15 + (17 * Listener.currentSong)];
 		yield return new WaitForSeconds(0.05f);
 		
 		GameEngine.SoundManager.Play(AirmanLevelSounds.LEAVE_LEVEL);
-		playerTexRend.material = playerMaterials[16 + (17 * (CurrentSong - 1))];
+		playerTexRend.material = playerMaterials[16 + (17 * Listener.currentSong)];
 		playerTexObj.localScale = new Vector3(0.04f, 1.0f, 0.2f);
 
 		StartCoroutine(MovePlayerUp());
@@ -316,7 +287,7 @@ public class Player : MonoBehaviour
 		if (health.IsHurting == true && health.IsDead == false)
 		{
 			playerTexObj.transform.localScale = new Vector3(0.1175f, 1.0f, 0.1175f);
-			playerTexRend.material = playerMaterials[7 + (17 * (CurrentSong - 1))];
+			playerTexRend.material = playerMaterials[7 + (17 * Listener.currentSong)];
 			playerTexRend.material.color *= 0.75f + Random.value;
 		}
 		else if (movement.IsJumping == true)
@@ -324,12 +295,12 @@ public class Player : MonoBehaviour
 			if (shooting.IsShooting == true)
 			{
 				playerTexObj.transform.localScale = new Vector3(0.1175f, 1.0f, 0.1175f);
-				playerTexRend.material = playerMaterials[9 + (17 * (CurrentSong - 1))];
+				playerTexRend.material = playerMaterials[9 + (17 * Listener.currentSong)];
 			}
 			else
 			{
 				playerTexObj.transform.localScale = new Vector3(0.1175f, 1.0f, 0.1175f);
-				playerTexRend.material = playerMaterials[2 + (17 * (CurrentSong - 1))];
+				playerTexRend.material = playerMaterials[2 + (17 * Listener.currentSong)];
 			}
 		}
 		else if (movement.IsWalking == true)
@@ -339,12 +310,12 @@ public class Player : MonoBehaviour
 			if (shooting.IsShooting == true)
 			{
 				playerTexObj.transform.localScale = new Vector3(0.13f, 1.0f, 0.1f);
-				playerTexRend.material = playerMaterials[ ((walkingTexIndex % 4) + 10) + (17 * (CurrentSong - 1))];
+				playerTexRend.material = playerMaterials[ ((walkingTexIndex % 4) + 10) + (17 * Listener.currentSong)];
 			}
 			else
 			{
 				playerTexObj.transform.localScale = new Vector3(0.1f, 1.0f, 0.1f);
-				playerTexRend.material = playerMaterials[ ((walkingTexIndex % 4) + 3) + (17 * (CurrentSong - 1))];
+				playerTexRend.material = playerMaterials[ ((walkingTexIndex % 4) + 3) + (17 * Listener.currentSong)];
 			}
 		}
 		// Standing...
@@ -353,13 +324,13 @@ public class Player : MonoBehaviour
 			if (shooting.IsShooting == true)
 			{
 				playerTexObj.transform.localScale = new Vector3(0.128f, 1.0f, 0.1f);
-				playerTexRend.material = playerMaterials[8 + (17 * (CurrentSong - 1))];
+				playerTexRend.material = playerMaterials[8 + (17 * Listener.currentSong)];
 			}
 			else
 			{
 				playerTexObj.transform.localScale = new Vector3(0.1f, 1.0f, 0.1f);
 				standingTexIndex = (int) (Time.time / standingTexInterval);
-				playerTexRend.material = (standingTexIndex % 10 == 0) ? playerMaterials[1 + (17 * (CurrentSong - 1))] : playerMaterials[17 * (CurrentSong - 1)];
+				playerTexRend.material = (standingTexIndex % 10 == 0) ? playerMaterials[1 + (17 * Listener.currentSong)] : playerMaterials[17 * Listener.currentSong];
 			}
 		}
 		

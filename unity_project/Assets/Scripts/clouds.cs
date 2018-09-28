@@ -1,18 +1,23 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class clouds : MonoBehaviour 
-{	
-	#region Variables
+{
+    #region Variables
 
-	// Protected Instance Variables
-	protected Vector3 initialScale = Vector3.one;
+    // Unity Editor Variables
+    //[serializefield] protected renderer texrend;
+    //[serializefield] protected list<material> materials;
+
+    // Protected Instance Variables
+    protected Vector3 initialScale = Vector3.one;
 	protected float cloudSpeed = 0.3f;
 	protected Vector2 scaleAmount = new Vector2(0.3f, 0.3f);
 
-	#endregion
+    #endregion
 
-
+    
 	#region MonoBehaviour
 
 	/* Use this for initialization */
@@ -38,8 +43,14 @@ public class clouds : MonoBehaviour
 	                    initialScale.x + Mathf.PingPong(scaleStatus, scaleAmount.x), 
 						initialScale.y + Mathf.PingPong(scaleStatus, scaleAmount.y), 
 						initialScale.z);
-		}
-	}
+            //AssignTexture();
+        }
+    }
+
+    //protected void AssignTexture()
+    //{
+    //    texRend.material = materials[Listener.currentSong];
+    //}
 
 	#endregion
 }

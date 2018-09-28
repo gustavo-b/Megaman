@@ -38,7 +38,7 @@ public class WindRobot : MonoBehaviour
 	// Constructor
 	protected void Awake() 
 	{
-		Assert.IsTrue(animationMaterials.Count == 4);
+		Assert.IsTrue(animationMaterials.Count == 4 * Listener.possibleSongTypes);
 	}
 
 	// Use this for initialization
@@ -163,7 +163,7 @@ public class WindRobot : MonoBehaviour
 		if (armsUp == true)
 		{
 			texIndex = (int) (Time.time / texArmsUpInterval);
-			GetComponent<Renderer>().material = animationMaterials[(texIndex % 2) + 2 ];
+			GetComponent<Renderer>().material = animationMaterials[(texIndex % 2) + 2 + 4 * Listener.currentSong];
 			
 			if (Time.time - texChangeTimer >= 0.35f)
 			{
@@ -174,7 +174,7 @@ public class WindRobot : MonoBehaviour
 		else
 		{
 			texIndex = (int) (Time.time / texArmsDownInterval);
-			GetComponent<Renderer>().material = animationMaterials[(texIndex % 2) ];
+			GetComponent<Renderer>().material = animationMaterials[(texIndex % 2) + (4 * Listener.currentSong)];
 			
 			if (Time.time - texChangeTimer >= 1.99f)
 			{

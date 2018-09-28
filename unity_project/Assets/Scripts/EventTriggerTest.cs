@@ -19,7 +19,7 @@ public class EventTriggerTest : MonoBehaviour
 
         if (Input.GetKeyDown("2"))
         {
-            EventManager.TriggerEvent("Slow");
+            EventManager.TriggerEvent("Moody");
         }
 
         if (Input.GetKeyDown("3"))
