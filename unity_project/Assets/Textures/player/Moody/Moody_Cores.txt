@@ -1,4 +1,0 @@
-photoshop:
-base 
-> image > adjustments > brightness -120
-> image > adjustments > photo filter > full black > density 98%
