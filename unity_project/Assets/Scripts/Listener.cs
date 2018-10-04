@@ -4,7 +4,7 @@ using UnityEngine;
 public class Listener : MonoBehaviour
 {
     public static int currentSong = 0;
-    public static int possibleSongTypes = 2;
+    public static int possibleSongTypes = 4;
     public static double songSpeed = 1;
 
     // Use this for initialization
@@ -12,20 +12,14 @@ public class Listener : MonoBehaviour
     {
         EventManager.StartListening("Normal", FlipCurrentSongToNormal);
         EventManager.StartListening("Darude", FlipCurrentSongToDarude);
-        EventManager.StartListening("Rock", FlipCurrentSongToRock);
         EventManager.StartListening("Moody", FlipCurrentSongToMoody);
+        EventManager.StartListening("Rock", FlipCurrentSongToRock);
     }
 
-    private void FlipCurrentSongToMoody()
+    private void FlipCurrentSongToNormal()
     {
-        currentSong = 2;
-        songSpeed = 0.5;
-}
-
-    private void FlipCurrentSongToRock()
-    {
-        currentSong = 3;
-        songSpeed = 1.2;
+        currentSong = 0;
+        songSpeed = 1;
     }
 
     private void FlipCurrentSongToDarude()
@@ -34,10 +28,16 @@ public class Listener : MonoBehaviour
         songSpeed = 2;
     }
 
-    private void FlipCurrentSongToNormal()
+    private void FlipCurrentSongToMoody()
     {
-        currentSong = 0;
-        songSpeed = 1;
+        currentSong = 2;
+        songSpeed = 0.5;
+    }
+
+    private void FlipCurrentSongToRock()
+    {
+        currentSong = 3;
+        songSpeed = 1.2;
     }
 
     // Update is called once per frame
