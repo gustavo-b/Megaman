@@ -5,7 +5,7 @@ public class Listener : MonoBehaviour
 {
     public static int currentSong = 0;
     public static int possibleSongTypes = 4;
-    public static double songSpeed = 1;
+    public static double songSpeed = 10;
 
     // Use this for initialization
     void Start()
@@ -19,25 +19,25 @@ public class Listener : MonoBehaviour
     private void FlipCurrentSongToNormal()
     {
         currentSong = 0;
-        songSpeed = 1;
+        songSpeed = 10;
     }
 
     private void FlipCurrentSongToDarude()
     {
         currentSong = 1;
-        songSpeed = 2;
+        songSpeed = 20;
     }
 
     private void FlipCurrentSongToMoody()
     {
         currentSong = 2;
-        songSpeed = 0.5;
+        songSpeed = 5;
     }
 
     private void FlipCurrentSongToRock()
     {
         currentSong = 3;
-        songSpeed = 1.2;
+        songSpeed = 13;
     }
 
     // Update is called once per frame

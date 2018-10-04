@@ -19,20 +19,28 @@ public class LevelCamera : MonoBehaviour
 	public bool CanMoveDown				{ get; set; }
 	public bool IsTransitioning			{ get; set; }
 	public bool ShouldStayStill			{ get; set; }
-	
-	// Private Instance Variables
-	private Vector3 playerPos;
+
+    // Private Instance Variables
+    private Vector3 playerPos;
 	private Vector3 deltaPos;
+    private Color[] songMode;
+    private int currentSong;
 
-	#endregion
+    #endregion
 
 
-	#region MonoBehaviour
-	
-	// Use this for initialization
-	protected void Start () 
-	{
-		Vector3 startPosition = new Vector3(13.34303f, 11.51588f, -10f);
+    #region MonoBehaviour
+
+    // Use this for initialization
+    protected void Start ()
+    {
+        songMode = new Color[4];
+        songMode[0] = Color.blue;
+        songMode[1] = Color.yellow;
+        songMode[2] = Color.gray;
+        songMode[3] = Color.red;
+
+        Vector3 startPosition = new Vector3(13.34303f, 11.51588f, -10f);
 		transform.position = startPosition; 
 		CheckpointPosition = startPosition;
 		
@@ -51,8 +59,14 @@ public class LevelCamera : MonoBehaviour
 	// Update is called once per frame
 	protected void Update () 
 	{
-		// If the camera is transitioning between parts of the scene...
-		if (IsTransitioning == true || ShouldStayStill == true)
+        if (currentSong != Listener.currentSong)
+        {
+            AssignBackground();
+            currentSong = Listener.currentSong;
+        }
+
+        // If the camera is transitioning between parts of the scene...
+        if (IsTransitioning == true || ShouldStayStill == true)
 		{
 			return;
 		}
@@ -80,13 +94,18 @@ public class LevelCamera : MonoBehaviour
   		} 
 	}
 
-	#endregion
+    protected void AssignBackground()
+    {
+        Camera.current.backgroundColor = songMode[Listener.currentSong];
+    }
+
+    #endregion
 
 
-	#region Public Functions
+    #region Public Functions
 
-	// 
-	public void Reset()
+    // 
+    public void Reset()
 	{
 		ShouldStayStill = false;
 		IsTransitioning = false;

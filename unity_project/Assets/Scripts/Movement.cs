@@ -22,7 +22,7 @@ public class Movement : MonoBehaviour
 	protected float gravity = 40f;	 			// Downward force
 	protected float terminalVelocity = 20f;	// Max downward speed
 	protected float jumpSpeed = 20f;			// Upward speed
-	protected float moveSpeed = 10f;			// Left/Right speed
+	//protected float moveSpeed = 10f;			// Left/Right speed
 	protected float verticalVelocity;
 	protected float hurtingForce = 2.0f;
 	protected Vector3 moveVector = Vector3.zero;
@@ -88,8 +88,8 @@ public class Movement : MonoBehaviour
 			moveVector = Vector3.Normalize(moveVector);
 		}
 		
-		//multiply moveVector by moveSpeed
-		moveVector *= moveSpeed;
+		//multiply moveVector by Listener.songSpeed
+		moveVector *= (float) Listener.songSpeed;
 		
 		//
 		ProcessExternalForces();
