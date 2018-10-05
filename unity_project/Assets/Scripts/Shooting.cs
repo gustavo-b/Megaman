@@ -17,14 +17,15 @@ public class Shooting : MonoBehaviour
 	protected float shotSpeed = 20f;
 	protected float delayBetweenShots = 0.2f;
 	protected float shootingTimer;
+    private int currentSong;
 
-	#endregion
-	
-	
-	#region MonoBehaviour
+    #endregion
 
-	// Use this for initialization 
-	protected void Start()
+
+    #region MonoBehaviour
+
+    // Use this for initialization 
+    protected void Start()
 	{
 		CanShoot = true;
 		IsShooting = false;
@@ -33,7 +34,13 @@ public class Shooting : MonoBehaviour
 	// Update is called once per frame 
 	protected void Update()
 	{
-		if (IsShooting == true)
+        if (currentSong != Listener.currentSong)
+        {
+            AssignShotSpeed();
+            currentSong = Listener.currentSong;
+        }
+
+        if (IsShooting == true)
 		{
 			if (Time.time - shootingTimer >= delayBetweenShots)
 			{
@@ -42,13 +49,18 @@ public class Shooting : MonoBehaviour
 		}
 	}
 
-	#endregion
-	
-	
-	#region Public Functions
+    protected void AssignShotSpeed()
+    {
+        shotSpeed = (float) Listener.songSpeed * 2;
+    }
 
-	//
-	public void Reset()
+    #endregion
+
+
+    #region Public Functions
+
+    //
+    public void Reset()
 	{
 		CanShoot = true;
 		IsShooting = false;
@@ -62,7 +74,7 @@ public class Shooting : MonoBehaviour
 		shotPos = transform.position + transform.right * ((isTurningLeft == true) ? -1.6f : 1.6f);
 		
 		GameObject rocketObj = (GameObject) Instantiate(shotPrefab, shotPos, transform.rotation);
-		Rigidbody rocketRBody = rocketObj.GetComponent<Rigidbody>();
+        Rigidbody rocketRBody = rocketObj.GetComponent<Rigidbody>();
 		rocketRBody.transform.Rotate(90,0,0);
 		Physics.IgnoreCollision(rocketRBody.GetComponent<Collider>(), GetComponent<Collider>());
 		
