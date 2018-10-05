@@ -36,7 +36,8 @@ public class SoundManager : MonoBehaviour
 
         EventManager.StartListening("Normal", NormalModifierProfile);
         EventManager.StartListening("Darude", DarudeModifierProfile);
-
+        EventManager.StartListening("Moody", MoodyModifierProfile);
+        EventManager.StartListening("Rock", RockModifierProfile);
 
     }
 
@@ -107,8 +108,38 @@ public class SoundManager : MonoBehaviour
         Play(AirmanLevelSounds.STAGE);
     }
 
-	// Called when the behaviour becomes disabled or inactive
-	protected void OnDisable()
+    protected void MoodyModifierProfile()
+    {
+        try
+        {
+            Stop(AirmanLevelSounds.STAGE);
+        }
+        finally
+        {
+            AudioClip stageMusicClip = (AudioClip)Resources.Load(path + "Moody");
+            stageMusic = AddAudio(stageMusicClip, true, true, 0.50f);
+        }
+
+        Play(AirmanLevelSounds.STAGE);
+    }
+
+    protected void RockModifierProfile()
+    {
+        try
+        {
+            Stop(AirmanLevelSounds.STAGE);
+        }
+        finally
+        {
+            AudioClip stageMusicClip = (AudioClip)Resources.Load(path + "Rock");
+            stageMusic = AddAudio(stageMusicClip, true, true, 0.50f);
+        }
+
+        Play(AirmanLevelSounds.STAGE);
+    }
+
+    // Called when the behaviour becomes disabled or inactive
+    protected void OnDisable()
 	{
 		GameEngine.SoundManager = null;
 	}
