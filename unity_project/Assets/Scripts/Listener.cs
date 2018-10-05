@@ -4,7 +4,7 @@ using UnityEngine;
 public class Listener : MonoBehaviour
 {
     public static int currentSong = 0;
-    public static int possibleSongTypes = 4;
+    public readonly static int possibleSongTypes = 4;
     public static double songSpeed = 10;
 
     // Use this for initialization
