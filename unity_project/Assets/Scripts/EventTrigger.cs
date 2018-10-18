@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EventTriggerTest : MonoBehaviour
+public class EventTrigger : MonoBehaviour
 {
-
-
     void Update()
     {
         if (Input.GetKeyDown("1"))

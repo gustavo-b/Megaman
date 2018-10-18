@@ -125,8 +125,8 @@ public class AirmanBoss : MonoBehaviour
 		hasBeenIntroduced = true;
 		
 		// Stop the stage theme and play the boss theme
-		GameEngine.SoundManager.Stop (AirmanLevelSounds.STAGE);
-		GameEngine.SoundManager.Play(AirmanLevelSounds.BOSS_MUSIC);
+		//GameEngine.SoundManager.Stop (AirmanLevelSounds.STAGE);
+		//GameEngine.SoundManager.Play(AirmanLevelSounds.BOSS_MUSIC);
 		
 		// Stop the player from shooting while healthbar is charging
 		player.CanShoot = false;		
@@ -280,7 +280,7 @@ public class AirmanBoss : MonoBehaviour
 		{
 			// Make the robot flex his muscles a little bit...
 			int texIndex = (int) (Time.time / 0.1);
-			rend.material = animationMaterials[texIndex % 3];			
+			rend.material = animationMaterials[(texIndex % 3) + (8 * Listener.currentSong)];			
 			rend.material.SetTextureScale("_MainTex", texScale);
 			
 			// Fill up the health bar...
@@ -323,20 +323,20 @@ public class AirmanBoss : MonoBehaviour
 		if (weapon.ShouldDisplayJumpingTex == true)
 		{
 			texIndex = (int) (Time.time / texInterval);
-			rend.material = animationMaterials[ (texIndex % 2) + 6];	
+			rend.material = animationMaterials[ ((texIndex % 2) + 6) + (8 * Listener.currentSong)];	
 		}
 		else if (weapon.ShouldDisplayShootingTex == true)
 		{
-			rend.material = animationMaterials[4];
+			rend.material = animationMaterials[ (4) + (8 * Listener.currentSong)];
 		}
 		else if (weapon.ShouldDisplayBlowingTex == true)
 		{
 			texIndex = (int) (Time.time / texInterval);
-			rend.material = animationMaterials[ (texIndex % 2) + 2];	
+			rend.material = animationMaterials[ ((texIndex % 2) + 2) + (8 * Listener.currentSong)];	
 		}
 		else
 		{
-			rend.material = animationMaterials[0];
+			rend.material = animationMaterials[ (0) + (8 * Listener.currentSong)];
 		}
 		
 		if (health.IsHurting == true)
