@@ -8,7 +8,8 @@ public class SpotifyTest : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        StartCoroutine(GetRequest("https://api.spotify.com/v1/me/player/currently-playing?access_token=BQBKiqJTDKpn-Ftbi7GwjYGQaZeCnHm_B2FylFFtHYMU0KM9QQlUYwfQGyWkoy7tHK63_n8Hnqy1fszwDlGPjTEt8-b_RLoYRIloZ1Rd7XXOVJMkhHjuZOOP0WkEpwHZzj_gK3iD8n2-6SHZQKa_GC4"));
+        StartCoroutine(GetRequest("https://accounts.spotify.com/authorize/?client_id=dc7407dc1c2042be8a8f5f78d6ccd3ad&response_type=code&redirect_uri=https%3A%2F%2Fwww.getpostman.com%2Foauth2%2Fcallback&scope=user-read-currently-playing&state=myDiggersby007"));
+        StartCoroutine(GetRequest("https://api.spotify.com/v1/me/player/currently-playing?access_token=<acces_token que é pego no primeiro exchange>&grant_type=refresh_token&refresh_token=<refresh_token que é pego no primeiro exchange>"));
     }
 
     IEnumerator GetRequest(string uri)
@@ -23,6 +24,7 @@ public class SpotifyTest : MonoBehaviour
         else
         {
             Debug.Log("Received: " + uwr.downloadHandler.text);
+            Application.OpenURL();
         }
     }
 
