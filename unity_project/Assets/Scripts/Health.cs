@@ -33,7 +33,7 @@ public class Health : MonoBehaviour
 	}
 	
 	// Protected Instance Variables
-	protected HealthBar healthbar = null;
+	protected MegaHealthBar healthbar = null;
 	protected float startHealth = 100f;
 	protected float currentHealth = 100f;
 
@@ -45,7 +45,7 @@ public class Health : MonoBehaviour
 	// Constructor
 	protected void Awake ()
 	{
-		healthbar = gameObject.AddComponent<HealthBar>();
+		healthbar = gameObject.AddComponent<MegaHealthBar>();
 		healthbar.ShowHealthBar = false;
 	}
 	

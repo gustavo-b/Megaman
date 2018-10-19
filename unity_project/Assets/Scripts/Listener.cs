@@ -39,10 +39,4 @@ public class Listener : MonoBehaviour
         currentSong = 3;
         songSpeed = 13;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

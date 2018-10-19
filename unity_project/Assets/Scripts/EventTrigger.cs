@@ -5,22 +5,22 @@ public class EventTrigger : MonoBehaviour
 {
     void Update()
     {
-        if (Input.GetKeyDown("1"))
+        if (SpotifyTest.songType == 1)
         {
             EventManager.TriggerEvent("Normal");
         }
 
-        if (Input.GetKeyDown("2"))
+        if (SpotifyTest.songType == 2)
         {
             EventManager.TriggerEvent("Darude");
         }
 
-        if (Input.GetKeyDown("3"))
+        if (SpotifyTest.songType == 3)
         {
             EventManager.TriggerEvent("Moody");
         }
 
-        if (Input.GetKeyDown("4"))
+        if (SpotifyTest.songType == 4)
         {
             EventManager.TriggerEvent("Rock");
         }
