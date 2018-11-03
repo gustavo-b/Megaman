@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +10,7 @@ public class SpotifyLoginMenu : MonoBehaviour {
     public Button entrarButton;
     private string nomeDeUsuario;
     private string senha;
+    private Boolean logado;
 
 
     void Start()
@@ -19,6 +18,7 @@ public class SpotifyLoginMenu : MonoBehaviour {
         entrarButton.onClick.AddListener(TaskOnClick);
         entrarButton.onClick.AddListener(setNomeDeUsuario);
         entrarButton.onClick.AddListener(setSenha);
+        entrarButton.onClick.AddListener(setLogado);
 
     }
 
@@ -32,6 +32,12 @@ public class SpotifyLoginMenu : MonoBehaviour {
         senha = senhaInputField.text;
     }
 
+    public void setLogado ()
+    {
+        logado = true;
+        Debug.Log("logado com sucesso");
+    }
+
     public string getNomeDeUsuario()
     {
         return nomeDeUsuario;
@@ -40,6 +46,11 @@ public class SpotifyLoginMenu : MonoBehaviour {
     public string getSenha()
     {
         return senha;
+    }
+
+    public Boolean isLogado ()
+    {
+        return logado;
     }
 
     void TaskOnClick()
