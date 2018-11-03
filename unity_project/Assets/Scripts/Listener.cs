@@ -18,25 +18,29 @@ public class Listener : MonoBehaviour
 
     private void FlipCurrentSongToNormal()
     {
+        //Debug.Log("Normal");
         currentSong = 0;
         songSpeed = 10;
     }
 
     private void FlipCurrentSongToDarude()
     {
+        //Debug.Log("Darude");
         currentSong = 1;
         songSpeed = 20;
     }
 
     private void FlipCurrentSongToMoody()
     {
+        //Debug.Log("Moody");
         currentSong = 2;
         songSpeed = 5;
     }
 
     private void FlipCurrentSongToRock()
     {
+        //Debug.Log("Rock");
         currentSong = 3;
-        songSpeed = 13;
+        songSpeed = 15;
     }
 }

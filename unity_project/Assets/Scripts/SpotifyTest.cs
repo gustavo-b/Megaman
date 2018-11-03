@@ -1,52 +1,66 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
-using Newtonsoft.Json.Linq;
+using SimpleJSON;
 
 public class SpotifyTest : MonoBehaviour
 {
     public static int songType = 1;
     private string trackId = "";
-    private string currentJson = "";
+    private string songJson = "";
+    private string audioFeaturesJson = "{\"energy\": 1.0}";
+    private string accessToken = "BQAcu3grndJEyvKYgwkTUH5hjCUwuuPSmVqy0dERRfxzkG-bsxHe99ytc8ExPvDex8uKc--IDTVnqQ2RGbIPXcwoBBd5apcm9P_Q8rQN_pUOgfw6OaxWPXup3-MPZZjlJodflNPfs4d6-d1lLAqfunw";
+    //private string refreshToken = "AQCRT0kkkxqBWqhHIUMnrKpzMlKAMlDf_PkkLrrW7gevnvDkSbeNdxbcsFgCmVQYVVQ4l-mtPrsv4N6af4kvAWA_jI-eRs85pIU4V5jcJzgGgNdUDdYplaq-UoxCBECkWI694A";
 
     // Use this for initialization
     void Start()
     {
-        StartCoroutine(GetRequest("https://accounts.spotify.com/authorize/?client_id=dc7407dc1c2042be8a8f5f78d6ccd3ad&response_type=code&redirect_uri=https%3A%2F%2Fwww.getpostman.com%2Foauth2%2Fcallback&scope=user-read-currently-playing&state=myDiggersby007"));
-        InvokeRepeating("UpdateSong", 0.1f, 1.0f);
+        var isSong = true;
+        StartCoroutine(GetRequest("https://accounts.spotify.com/authorize/?client_id=dc7407dc1c2042be8a8f5f78d6ccd3ad&response_type=code&redirect_uri=https%3A%2F%2Fwww.getpostman.com%2Foauth2%2Fcallback&scope=user-read-currently-playing&state=myDiggersby007", isSong));
+        InvokeRepeating("UpdateSong", 1.0f, 1.5f);
     }
 
     void UpdateSong()
     {
-        StartCoroutine(GetRequest("https://api.spotify.com/v1/me/player/currently-playing?access_token=BQDUlL529ElaNuQq6dBccRo8KhPPe-Cu-8ge5VA-u5mVv2jX4wZWe-8gTOedqpAzDg9-O3eVgwSYjPVj1i-tNqeTF6chSw7iR-SWQJYgKavv9sI6brtPgt__UySpO7HCu5OMEhw9GSPPp194ULokeFI&grant_type=refresh_token&refresh_token=AQDgKzP43xNRdpA6ke3YFyfmO75rAhxn7lwD4UQmsF-EJeZyDSXbJcGBld2qJxGSTPRfMVdVBjjmeH7wB1rIn61951oGJcnEUmpJdNdDVvd6UCykH8zmK01jvYWaEgcDrFqBeA"));
-        GetSongData();
+        var isSong = true;
+        StartCoroutine(GetRequest("https://api.spotify.com/v1/me/player/currently-playing?access_token=" + accessToken, isSong));
     }
-
+    
     void GetSongData()
     {
-        var obj = JObject.Parse(this.currentJson);
-        if (this.trackId != (string)obj["item"]["id"] || this.trackId.Equals(""))
+        var isSong = false;
+        var obj = JSON.Parse(this.songJson);
+        if (!this.trackId.Equals(obj["item"]["id"].Value) || this.trackId.Equals(""))
         {
-            this.trackId = (string)obj["item"]["id"];
-            StartCoroutine(GetRequest("https://api.spotify.com/v1/audio-features/" + this.trackId + "?access_token=BQDUlL529ElaNuQq6dBccRo8KhPPe-Cu-8ge5VA-u5mVv2jX4wZWe-8gTOedqpAzDg9-O3eVgwSYjPVj1i-tNqeTF6chSw7iR-SWQJYgKavv9sI6brtPgt__UySpO7HCu5OMEhw9GSPPp194ULokeFI&grant_type=refresh_token&refresh_token=AQDgKzP43xNRdpA6ke3YFyfmO75rAhxn7lwD4UQmsF-EJeZyDSXbJcGBld2qJxGSTPRfMVdVBjjmeH7wB1rIn61951oGJcnEUmpJdNdDVvd6UCykH8zmK01jvYWaEgcDrFqBeA"));
-            obj = JObject.Parse(this.currentJson);
-            if ((float)obj["energy"] < 0.3f)
-            {
-                songType = 3;
-            } else if ((float)obj["energy"] >= 0.3f && (float)obj["energy"] < 0.5f)
-            {
-                songType = 2;
-            } else if ((float)obj["energy"] >= 0.5f && (float)obj["energy"] < 0.7f)
-            {
-                songType = 4;
-            } else
-            {
-                songType = 2;
-            }
+            this.trackId = obj["item"]["id"].Value;
+            Debug.Log(this.trackId);
+            StartCoroutine(GetRequest("https://api.spotify.com/v1/audio-features/" + this.trackId + "?access_token=" + accessToken, isSong));
         }
     }
 
-    IEnumerator GetRequest(string uri)
+    void SwitchBySongEnergy()
+    {
+        var obj = JSON.Parse(this.audioFeaturesJson);
+        Debug.Log(obj["energy"].AsDouble);
+        if (obj["energy"].AsDouble < 0.3)
+        {
+            songType = 3;
+        }
+        else if (obj["energy"].AsDouble >= 0.3f && obj["energy"].AsDouble < 0.5f)
+        {
+            songType = 1;
+        }
+        else if (obj["energy"].AsDouble >= 0.5f && obj["energy"].AsDouble < 0.7f)
+        {
+            songType = 4;
+        }
+        else
+        {
+            songType = 2;
+        }
+    }
+
+    IEnumerator GetRequest(string uri, bool isSong)
     {
         UnityWebRequest uwr = UnityWebRequest.Get(uri);
         yield return uwr.SendWebRequest();
@@ -58,7 +72,15 @@ public class SpotifyTest : MonoBehaviour
         else
         {
             Debug.Log("Received: " + uwr.downloadHandler.text);
-            this.currentJson = uwr.downloadHandler.text;
+            if (isSong)
+            {
+                this.songJson = uwr.downloadHandler.text;
+                GetSongData();
+            } else
+            {
+                this.audioFeaturesJson = uwr.downloadHandler.text;
+                SwitchBySongEnergy();
+            }
         }
     }
 
