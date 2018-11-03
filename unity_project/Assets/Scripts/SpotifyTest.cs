@@ -7,6 +7,7 @@ public class SpotifyTest : MonoBehaviour
 {
     public static int songType = 1;
     private string trackId = "";
+    private string loginHtml = "";
     private string songJson = "";
     private string audioFeaturesJson = "{\"energy\": 1.0}";
     private string accessToken = "BQAcu3grndJEyvKYgwkTUH5hjCUwuuPSmVqy0dERRfxzkG-bsxHe99ytc8ExPvDex8uKc--IDTVnqQ2RGbIPXcwoBBd5apcm9P_Q8rQN_pUOgfw6OaxWPXup3-MPZZjlJodflNPfs4d6-d1lLAqfunw";
@@ -15,26 +16,27 @@ public class SpotifyTest : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        var isSong = true;
-        StartCoroutine(GetRequest("https://accounts.spotify.com/authorize/?client_id=dc7407dc1c2042be8a8f5f78d6ccd3ad&response_type=code&redirect_uri=https%3A%2F%2Fwww.getpostman.com%2Foauth2%2Fcallback&scope=user-read-currently-playing&state=myDiggersby007", isSong));
+        var isLogin = 0;
+        Application.OpenURL("https://accounts.spotify.com/authorize/?client_id=dc7407dc1c2042be8a8f5f78d6ccd3ad&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080/callback&scope=user-read-currently-playing&state=myDiggersby007");
+        //StartCoroutine(GetRequest("https://accounts.spotify.com/authorize/?client_id=dc7407dc1c2042be8a8f5f78d6ccd3ad&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080/callback&scope=user-read-currently-playing&state=myDiggersby007", isLogin));
         InvokeRepeating("UpdateSong", 1.0f, 1.5f);
     }
 
     void UpdateSong()
     {
-        var isSong = true;
+        var isSong = 1;
         StartCoroutine(GetRequest("https://api.spotify.com/v1/me/player/currently-playing?access_token=" + accessToken, isSong));
     }
     
     void GetSongData()
     {
-        var isSong = false;
+        var isAudioFeatures = 2;
         var obj = JSON.Parse(this.songJson);
         if (!this.trackId.Equals(obj["item"]["id"].Value) || this.trackId.Equals(""))
         {
             this.trackId = obj["item"]["id"].Value;
             Debug.Log(this.trackId);
-            StartCoroutine(GetRequest("https://api.spotify.com/v1/audio-features/" + this.trackId + "?access_token=" + accessToken, isSong));
+            StartCoroutine(GetRequest("https://api.spotify.com/v1/audio-features/" + this.trackId + "?access_token=" + accessToken, isAudioFeatures));
         }
     }
 
@@ -60,7 +62,7 @@ public class SpotifyTest : MonoBehaviour
         }
     }
 
-    IEnumerator GetRequest(string uri, bool isSong)
+    IEnumerator GetRequest(string uri, int typeOfCall)
     {
         UnityWebRequest uwr = UnityWebRequest.Get(uri);
         yield return uwr.SendWebRequest();
@@ -72,11 +74,17 @@ public class SpotifyTest : MonoBehaviour
         else
         {
             Debug.Log("Received: " + uwr.downloadHandler.text);
-            if (isSong)
+            if (typeOfCall == 0)
+            {
+                this.loginHtml = uwr.downloadHandler.text;
+                    
+            }
+            else if (typeOfCall == 1)
             {
                 this.songJson = uwr.downloadHandler.text;
                 GetSongData();
-            } else
+            }
+            else
             {
                 this.audioFeaturesJson = uwr.downloadHandler.text;
                 SwitchBySongEnergy();
