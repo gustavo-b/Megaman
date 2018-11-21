@@ -74,20 +74,24 @@ public class SpotifyTest : MonoBehaviour
         else
         {
             Debug.Log("Received: " + uwr.downloadHandler.text);
-            if (typeOfCall == 0)
+            switch(typeOfCall)
             {
-                this.loginHtml = uwr.downloadHandler.text;
-                    
-            }
-            else if (typeOfCall == 1)
-            {
-                this.songJson = uwr.downloadHandler.text;
-                GetSongData();
-            }
-            else
-            {
-                this.audioFeaturesJson = uwr.downloadHandler.text;
-                SwitchBySongEnergy();
+                case 0:
+                    this.loginHtml = uwr.downloadHandler.text;
+                    break;
+
+                case 1:
+                    this.songJson = uwr.downloadHandler.text;
+                    GetSongData();
+                    break;
+
+                case 2:
+                    this.audioFeaturesJson = uwr.downloadHandler.text;
+                    SwitchBySongEnergy();
+                    break;
+
+                default:
+                    break;
             }
         }
     }
