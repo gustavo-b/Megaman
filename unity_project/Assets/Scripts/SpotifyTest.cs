@@ -17,7 +17,7 @@ public class SpotifyTest : MonoBehaviour
     void Start()
     {
         var isLogin = 0;
-        Application.OpenURL("https://accounts.spotify.com/authorize/?client_id=dc7407dc1c2042be8a8f5f78d6ccd3ad&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080/callback&scope=user-read-currently-playing&state=myDiggersby007");
+        //Application.OpenURL("https://accounts.spotify.com/authorize/?client_id=dc7407dc1c2042be8a8f5f78d6ccd3ad&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080/callback&scope=user-read-currently-playing&state=myDiggersby007");
         //StartCoroutine(GetRequest("https://accounts.spotify.com/authorize/?client_id=dc7407dc1c2042be8a8f5f78d6ccd3ad&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080/callback&scope=user-read-currently-playing&state=myDiggersby007", isLogin));
         InvokeRepeating("UpdateSong", 1.0f, 1.5f);
     }
