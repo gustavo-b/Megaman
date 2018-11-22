@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class SpotifySettingsButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -22,9 +23,8 @@ public class SpotifySettingsButton : MonoBehaviour, IPointerEnterHandler, IPoint
     {
         //Output this to console when Button is clicked
         som.clip = somClick;
-        som.Play();
-        Application.OpenURL("https://accounts.spotify.com/authorize/?client_id=dc7407dc1c2042be8a8f5f78d6ccd3ad&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080/callback&scope=user-read-currently-playing&state=myDiggersby007");
-    }
+        StartCoroutine(PlayAndOpenURL());
+         }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -36,5 +36,13 @@ public class SpotifySettingsButton : MonoBehaviour, IPointerEnterHandler, IPoint
     public void OnPointerExit(PointerEventData eventData)
     {
         texto.color = Color.green;
+    }
+
+    IEnumerator PlayAndOpenURL()
+    {
+        som.Play();
+        yield return new WaitWhile(() => som.isPlaying);
+        //do something
+        Application.OpenURL("https://accounts.spotify.com/authorize/?client_id=dc7407dc1c2042be8a8f5f78d6ccd3ad&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080/callback&scope=user-read-currently-playing&state=myDiggersby007");
     }
 }

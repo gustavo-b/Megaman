@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
-
+using System.Collections;
 
 public class StartButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -24,8 +24,7 @@ public class StartButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         //Output this to console when Button is clicked
         som.clip = somClick;
-        som.Play();
-        LoadScene();
+        StartCoroutine(PlayAndStart());
     }
 
     public void LoadScene()
@@ -43,5 +42,13 @@ public class StartButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerExit(PointerEventData eventData)
     {
         texto.color = Color.green;
+    }
+
+    IEnumerator PlayAndStart()
+    {
+        som.Play();
+        yield return new WaitWhile(() => som.isPlaying);
+        //do something
+        LoadScene();
     }
 }

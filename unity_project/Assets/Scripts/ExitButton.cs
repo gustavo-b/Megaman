@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class ExitButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -22,8 +23,8 @@ public class ExitButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         //Output this to console when Button is clicked
         som.clip = somClick;
-        som.Play();
-        Application.Quit();
+        StartCoroutine(PlayAndExit());
+        
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -36,5 +37,22 @@ public class ExitButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void OnPointerExit(PointerEventData eventData)
     {
         texto.color = Color.green;
+    }
+
+    IEnumerator PlayAndExit()
+    {
+        som.Play();
+        yield return new WaitForSeconds(3);
+        //do something
+        ExitApplication();
+    }
+
+    void ExitApplication()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else 
+        Application.Quit();
+#endif
     }
 }
