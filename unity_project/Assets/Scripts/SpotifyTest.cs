@@ -10,15 +10,15 @@ public class SpotifyTest : MonoBehaviour
     private string loginHtml = "";
     private string songJson = "";
     private string audioFeaturesJson = "{\"energy\": 1.0}";
-    private string accessToken = "BQAcu3grndJEyvKYgwkTUH5hjCUwuuPSmVqy0dERRfxzkG-bsxHe99ytc8ExPvDex8uKc--IDTVnqQ2RGbIPXcwoBBd5apcm9P_Q8rQN_pUOgfw6OaxWPXup3-MPZZjlJodflNPfs4d6-d1lLAqfunw";
+    private string accessToken = "BQDAEV40BGlr9N6EZ8UWSLqJjn1LkkbXlpdA8eEMSfHpdc2cVYFULmeFHMX213XPLdk1DoV8H2zBHT-5XKrZtj_RZADx4gODsZj5h4Va0ClyxeTwyhZgprKHk8MUZv2ljg9slaU6SziRkHT4xBq9UV0";
     //private string refreshToken = "AQCRT0kkkxqBWqhHIUMnrKpzMlKAMlDf_PkkLrrW7gevnvDkSbeNdxbcsFgCmVQYVVQ4l-mtPrsv4N6af4kvAWA_jI-eRs85pIU4V5jcJzgGgNdUDdYplaq-UoxCBECkWI694A";
 
     // Use this for initialization
     void Start()
     {
-        var isLogin = 0;
-        //Application.OpenURL("https://accounts.spotify.com/authorize/?client_id=dc7407dc1c2042be8a8f5f78d6ccd3ad&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080/callback&scope=user-read-currently-playing&state=myDiggersby007");
-        //StartCoroutine(GetRequest("https://accounts.spotify.com/authorize/?client_id=dc7407dc1c2042be8a8f5f78d6ccd3ad&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080/callback&scope=user-read-currently-playing&state=myDiggersby007", isLogin));
+        //var isLogin = 0;
+        //Application.OpenURL("https://accounts.spotify.com/authorize?client_id=dc7407dc1c2042be8a8f5f78d6ccd3ad&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080/callback&scope=user-read-currently-playing");
+        //StartCoroutine(GetRequest("https://accounts.spotify.com/authorize/?client_id=dc7407dc1c2042be8a8f5f78d6ccd3ad&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080/callback&scope=user-read-currently-playing", isLogin));
         InvokeRepeating("UpdateSong", 1.0f, 1.5f);
     }
 
