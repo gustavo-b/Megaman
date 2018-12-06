@@ -13,6 +13,7 @@ public class SpotifyTest : MonoBehaviour
     private string songJson = "";
     private string audioFeaturesJson = "{\"energy\": 1.0}";
     private string accessToken = "";
+    private TextoNomeDaMusica textoNomeDaMusica;
     //private string refreshToken = "AQCRT0kkkxqBWqhHIUMnrKpzMlKAMlDf_PkkLrrW7gevnvDkSbeNdxbcsFgCmVQYVVQ4l-mtPrsv4N6af4kvAWA_jI-eRs85pIU4V5jcJzgGgNdUDdYplaq-UoxCBECkWI694A";
 
     // Use this for initialization
@@ -48,6 +49,7 @@ public class SpotifyTest : MonoBehaviour
     {
         var obj = JSON.Parse(this.audioFeaturesJson);
         Debug.Log(obj["energy"].AsDouble);
+        textoNomeDaMusica = new TextoNomeDaMusica();
         if (obj["energy"].AsDouble < 0.3)
         {
             songType = 3;
