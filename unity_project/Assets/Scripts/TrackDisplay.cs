@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class TextoNomeDaMusica : MonoBehaviour
+public class TrackDisplay : MonoBehaviour
 {
     public Canvas canvas = null;
     public Text text = null;
     public Button buttonNextTrack = null;
     public Button buttonPreviousTrack = null;
+    //private SpotifyTest;
 
     void Awake()
     {

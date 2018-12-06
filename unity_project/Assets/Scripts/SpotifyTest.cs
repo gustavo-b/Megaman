@@ -13,7 +13,8 @@ public class SpotifyTest : MonoBehaviour
     private string songJson = "";
     private string audioFeaturesJson = "{\"energy\": 1.0}";
     private string accessToken = "";
-    private TextoNomeDaMusica textoNomeDaMusica;
+    private string songName = "";
+
     //private string refreshToken = "AQCRT0kkkxqBWqhHIUMnrKpzMlKAMlDf_PkkLrrW7gevnvDkSbeNdxbcsFgCmVQYVVQ4l-mtPrsv4N6af4kvAWA_jI-eRs85pIU4V5jcJzgGgNdUDdYplaq-UoxCBECkWI694A";
 
     // Use this for initialization
@@ -40,7 +41,9 @@ public class SpotifyTest : MonoBehaviour
         if (!this.trackId.Equals(obj["item"]["id"].Value) || this.trackId.Equals(""))
         {
             this.trackId = obj["item"]["id"].Value;
+            this.songName = obj["item"]["name"].Value;
             Debug.Log(this.trackId);
+            Debug.Log("NOME DA MUSICA: " + songName);
             StartCoroutine(GetRequest("https://api.spotify.com/v1/audio-features/" + this.trackId + "?access_token=" + accessToken, isAudioFeatures));
         }
     }
@@ -49,7 +52,6 @@ public class SpotifyTest : MonoBehaviour
     {
         var obj = JSON.Parse(this.audioFeaturesJson);
         Debug.Log(obj["energy"].AsDouble);
-        textoNomeDaMusica = new TextoNomeDaMusica();
         if (obj["energy"].AsDouble < 0.3)
         {
             songType = 3;
@@ -135,5 +137,10 @@ public class SpotifyTest : MonoBehaviour
         }
 
         return text.Substring(15);
+    }
+
+    public string getSongName ()
+    {
+        return this.songName;
     }
 }
