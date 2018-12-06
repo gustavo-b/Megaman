@@ -139,7 +139,6 @@ public class SpotifyTest : MonoBehaviour
         return text.Substring(15);
     }
 
-    public string getSongName ()
     {
         return this.songName;
     }
