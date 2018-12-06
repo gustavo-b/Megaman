@@ -7,7 +7,7 @@ public class TrackDisplay : MonoBehaviour
     public Text text = null;
     public Button buttonNextTrack = null;
     public Button buttonPreviousTrack = null;
-    //private SpotifyTest;
+    private string songName;
 
     void Awake()
     {
@@ -21,7 +21,11 @@ public class TrackDisplay : MonoBehaviour
 
     void Update()
     {
-                text.text = "HELLO MARILENNE";
-                text.text = "HELLO AGAIN MARILENNE";
+                text.text = songName;
+    }
+
+    public void setSongName (string songName)
+    {
+        this.songName = songName;
     }
 }

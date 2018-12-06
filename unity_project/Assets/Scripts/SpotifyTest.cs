@@ -14,6 +14,7 @@ public class SpotifyTest : MonoBehaviour
     private string audioFeaturesJson = "{\"energy\": 1.0}";
     private string accessToken = "";
     private string songName = "";
+    private TrackDisplay trackDisplay;
 
     //private string refreshToken = "AQCRT0kkkxqBWqhHIUMnrKpzMlKAMlDf_PkkLrrW7gevnvDkSbeNdxbcsFgCmVQYVVQ4l-mtPrsv4N6af4kvAWA_jI-eRs85pIU4V5jcJzgGgNdUDdYplaq-UoxCBECkWI694A";
 
@@ -44,6 +45,8 @@ public class SpotifyTest : MonoBehaviour
             this.songName = obj["item"]["name"].Value;
             Debug.Log(this.trackId);
             Debug.Log("NOME DA MUSICA: " + songName);
+            trackDisplay = GameObject.Find("DisplaySpotify").GetComponent<TrackDisplay>();
+            trackDisplay.setSongName(songName);
             StartCoroutine(GetRequest("https://api.spotify.com/v1/audio-features/" + this.trackId + "?access_token=" + accessToken, isAudioFeatures));
         }
     }
@@ -139,6 +142,7 @@ public class SpotifyTest : MonoBehaviour
         return text.Substring(15);
     }
 
+    string getSongName ()
     {
         return this.songName;
     }
