@@ -5,9 +5,8 @@ public class TrackDisplay : MonoBehaviour
 {
     public Canvas canvas = null;
     public Text text = null;
-    public Button buttonNextTrack = null;
-    public Button buttonPreviousTrack = null;
-    private string songName;
+    private string songName = "";
+    private SpotifyTest spotifyTest;
 
     void Awake()
     {
@@ -17,6 +16,8 @@ public class TrackDisplay : MonoBehaviour
 
         text.font = arial;
         text.fontSize = 14;
+
+        spotifyTest = GameObject.Find("Player").GetComponent<SpotifyTest>();
     }
 
     void Update()
