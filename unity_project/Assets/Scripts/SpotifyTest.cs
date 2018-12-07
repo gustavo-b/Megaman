@@ -55,19 +55,19 @@ public class SpotifyTest : MonoBehaviour
     {
         var obj = JSON.Parse(this.audioFeaturesJson);
         Debug.Log(obj["energy"].AsDouble);
-        if (obj["energy"].AsDouble < 0.3)
+        if (obj["energy"].AsDouble < 0.3 && obj["energy"].AsDouble != 0)
         {
             songType = 3;
         }
-        else if (obj["energy"].AsDouble >= 0.3f && obj["energy"].AsDouble < 0.5f)
+        else if (obj["energy"].AsDouble >= 0.3f && obj["energy"].AsDouble < 0.5f && obj["energy"].AsDouble != 0)
         {
             songType = 1;
         }
-        else if (obj["energy"].AsDouble >= 0.5f && obj["energy"].AsDouble < 0.7f)
+        else if (obj["energy"].AsDouble >= 0.5f && obj["energy"].AsDouble < 0.7f && obj["energy"].AsDouble != 0)
         {
             songType = 4;
         }
-        else
+        else if (obj["energy"].AsDouble != 0)
         {
             songType = 2;
         }
